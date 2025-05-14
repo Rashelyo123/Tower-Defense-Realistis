@@ -1,0 +1,24 @@
+
+-------------------------------------------
+Game tags:
+
+Enemy
+Defender
+Tower
+Center Point
+-------------------------------------------
+
+Uploaded from Unity 2020.3.25f1 from built-in pipeline
+
+Tutorial's playlist:
+https://www.youtube.com/playlist?list=PLVXvfvDWvto2JRnxdFay1HZnXSjE5ND56
+
+Model and animation playlist:
+https://www.youtube.com/watch?v=naBApa0_kIk&list=PLVXvfvDWvto3BfcnCl-uAteeS2Rp7_8hu
+
+This game is based on Tower Defender Creator asset:
+https://assetstore.unity.com/packages/templates/packs/city-tower-defense-210511
+
+-------------------------------------------
+UI icons and particle texture from:
+www.freepik.com
