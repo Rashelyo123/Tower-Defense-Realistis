@@ -229,6 +229,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MuzzelFlash_ParticleSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 3431126905049895018, guid: 0adc03c6958a1b64f92f4187ccabf901, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

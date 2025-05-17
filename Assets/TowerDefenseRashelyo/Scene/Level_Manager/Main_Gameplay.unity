@@ -12816,7 +12816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: totalWaves
-      value: 100
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: nextWaveText

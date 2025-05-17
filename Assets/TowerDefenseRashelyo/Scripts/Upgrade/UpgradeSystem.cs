@@ -95,6 +95,7 @@ public class UpgradeSystem : MonoBehaviour
 	// Upgrade Defenders
 	public void Defender_Upgrade(int id)
 	{
+		AudioEventSystem.PlayAudio("OpenMenu");
 		if (defenderUpgradeLevel[id] < defenderMaxUpgradeLevel)
 		{
 			if (PlayerPrefs.GetInt("Total Coins") >= defenderUpgradesPrice[id])

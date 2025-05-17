@@ -8,11 +8,11 @@ public class uiSwipe : MonoBehaviour
     float scroll_pos = 0;
     float[] pos;
     int currentIndex = 0;
+    int lastIndex = -1; // Untuk deteksi perubahan
     float distance;
 
     void Start()
     {
-        // Inisialisasi posisi sekali di awal
         int count = transform.childCount;
         pos = new float[count];
         distance = 1f / (count - 1f);
@@ -37,7 +37,7 @@ public class uiSwipe : MonoBehaviour
             currentIndex = Mathf.Min(pos.Length - 1, currentIndex + 1);
         }
 
-        // Update posisi scroll ke target index jika tidak drag
+        // Update posisi scroll
         if (!Input.GetMouseButton(0))
         {
             scroll_pos = Mathf.Lerp(scrollbar.GetComponent<Scrollbar>().value, pos[currentIndex], 0.1f);
@@ -46,7 +46,8 @@ public class uiSwipe : MonoBehaviour
         else
         {
             scroll_pos = scrollbar.GetComponent<Scrollbar>().value;
-            // Update currentIndex berdasarkan scroll pos saat drag
+
+            // Update currentIndex berdasarkan posisi scroll
             for (int i = 0; i < pos.Length; i++)
             {
                 if (scroll_pos < pos[i] + (distance / 2) && scroll_pos > pos[i] - (distance / 2))
@@ -56,7 +57,14 @@ public class uiSwipe : MonoBehaviour
             }
         }
 
-        // Scaling efek
+        // 🔊 Mainkan audio hanya jika index berubah
+        if (currentIndex != lastIndex)
+        {
+            AudioEventSystem.PlayAudio("ChoseCharacter");
+            lastIndex = currentIndex;
+        }
+
+        // Efek scaling
         for (int i = 0; i < pos.Length; i++)
         {
             if (scroll_pos < pos[i] + (distance / 2) && scroll_pos > pos[i] - (distance / 2))

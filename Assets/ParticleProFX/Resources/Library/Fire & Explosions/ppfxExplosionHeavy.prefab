@@ -19546,6 +19546,7 @@ GameObject:
   - component: {fileID: 11400004}
   - component: {fileID: 11400002}
   - component: {fileID: 11400006}
+  - component: {fileID: -756541996297608688}
   m_Layer: 0
   m_Name: ppfxExplosionHeavy
   m_TagString: Untagged
@@ -19563,8 +19564,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3.84, y: 3.84, z: 3.84}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 400008}
   - {fileID: 400006}
@@ -23163,9 +23164,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 0.25000006}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -23346,7 +23347,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -24417,6 +24418,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a97474e35cd3dec4b9df10fbc86081ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 8
+  radius: 20.63
   force: 10
   delay: 0
+  Damagevalue: 73
+  targetTag: Enemy
+--- !u!114 &-756541996297608688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b6b88d425f7234aae309cb9a973743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Delay: 1
+  MaximumStress: 0.6
+  Range: 45

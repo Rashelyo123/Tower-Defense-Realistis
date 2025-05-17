@@ -11,6 +11,7 @@ public class MainMenu : MonoBehaviour
     public int minimumCoins = 1000;
     public Text totalCoinsText;
     public Text totalScoresText;
+    //UI Menu
     public GameObject UpgradeMenu;
     public GameObject SettingsMenu;
     public GameObject SatisticsMenu;
@@ -18,6 +19,9 @@ public class MainMenu : MonoBehaviour
     public GameObject TropyMenu;
     public GameObject ScoreMenu;
     public GameObject CoinMenu;
+    // Sound
+    public AudioSource buttonClickSound;
+
 
     void Start()
     {
@@ -52,11 +56,19 @@ public class MainMenu : MonoBehaviour
     public void Enable_Object(GameObject target)
     {
         target.SetActive(true);
+        if (buttonClickSound != null)
+        {
+            buttonClickSound.Play();
+        }
     }
 
     public void Disable_Object(GameObject target)
     {
         target.SetActive(false);
+        if (buttonClickSound != null)
+        {
+            buttonClickSound.Play();
+        }
     }
 
     private void EnableAllMenus()

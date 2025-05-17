@@ -3,11 +3,12 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UltimateSkilBro : MonoBehaviour
+public class MeteorShower : MonoBehaviour
 {
     [SerializeField] private GameObject ultimateskil;
     [SerializeField] private Image cooldonwnImage;
     [SerializeField] private Text cooldownText;
+    [SerializeField] private ParticleSystem meteorShowerParticle;
 
     public float cooldownTime = 60f;
     private float currentCooldownTime = 0f;
@@ -19,6 +20,7 @@ public class UltimateSkilBro : MonoBehaviour
 
         // cooldonwnImage.fillAmount = 0f;
         // cooldownText.text = "";
+        meteorShowerParticle.Stop();
         StartCooldown();
     }
     void Update()
@@ -43,16 +45,23 @@ public class UltimateSkilBro : MonoBehaviour
         if (!isCooldown)
         {
             ActiveUltimateSkill();
+
             StartCooldown();
         }
     }
     private void ActiveUltimateSkill()
     {
-        if (ultimateskil != null)
-        {
-            ultimateskil.SetActive(true);
-            StartCoroutine(UltimateDuration());
+        // if (ultimateskil != null)
+        // {
+        //     ultimateskil.SetActive(true);
+        //     StartCoroutine(UltimateDuration());
 
+        // }
+
+        if (meteorShowerParticle != null)
+        {
+            meteorShowerParticle.Play();
+            StartCoroutine(UltimateDuration());
         }
 
     }
@@ -64,9 +73,11 @@ public class UltimateSkilBro : MonoBehaviour
     private IEnumerator UltimateDuration()
     {
         yield return new WaitForSeconds(ultimateDuration);
-        if (ultimateskil != null)
+        if (meteorShowerParticle != null)
         {
-            ultimateskil.SetActive(false);
+            meteorShowerParticle.Stop();
+            // ultimateskil.SetActive(false);
         }
+
     }
 }

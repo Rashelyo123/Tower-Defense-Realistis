@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallFireMuzzle
       objectReference: {fileID: 0}
+    - target: {fileID: 4186470608034871016, guid: d0587f5385f12eb419ec33e7406d7b55, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6324283893382468811, guid: d0587f5385f12eb419ec33e7406d7b55, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.15
