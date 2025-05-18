@@ -18,6 +18,9 @@ public class PPFXPhysicForce : MonoBehaviour
 	public float delay = 0.2f;
 	public int Damagevalue;
 	public string targetTag = "Enemy";
+	[SerializeField] private AudioClip explosionSound;
+	[SerializeField] private AudioSource explosionAudioSource;
+
 
 
 	Collider[] colliders;
@@ -26,6 +29,12 @@ public class PPFXPhysicForce : MonoBehaviour
 	void Start()
 	{
 		colliders = Physics.OverlapSphere(this.transform.position, radius);
+		explosionAudioSource = GetComponent<AudioSource>();
+		if (explosionSound != null)
+		{
+			explosionAudioSource.clip = explosionSound;
+			explosionAudioSource.Play();
+		}
 
 		StartCoroutine(Explode());
 	}
@@ -39,6 +48,8 @@ public class PPFXPhysicForce : MonoBehaviour
 			var _rb = colliders[i].GetComponent<Rigidbody>();
 			Camera.main.GetComponent<StressReceiver>().InduceStress(1.0f);
 			Camera.main.GetComponent<StressReceiver>().MaximumAngularShake = new Vector3(1, 1, 1);
+
+
 
 			if (_rb != null)
 			{

@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
     public GameObject TropyMenu;
     public GameObject ScoreMenu;
     public GameObject CoinMenu;
+    public GameObject JudulGame;
     // Sound
     public AudioSource buttonClickSound;
 
@@ -80,6 +81,7 @@ public class MainMenu : MonoBehaviour
         TropyMenu.SetActive(true);
         ScoreMenu.SetActive(true);
         CoinMenu.SetActive(true);
+        JudulGame.SetActive(true);
     }
 
     private void DisableAllMenus()
@@ -91,6 +93,7 @@ public class MainMenu : MonoBehaviour
         TropyMenu.SetActive(false);
         ScoreMenu.SetActive(false);
         CoinMenu.SetActive(false);
+        JudulGame.SetActive(false);
     }
 
     public void Toggle_Object(GameObject target)
@@ -102,13 +105,13 @@ public class MainMenu : MonoBehaviour
     {
         DisableAllMenus();
         target.SetActive(true);
-        Debug.Log("Enable Only This Menu");
+
     }
 
     public void DisableOnlyThisMenu(GameObject target)
     {
         EnableAllMenus();
         target.SetActive(false);
-        Debug.Log("Disable Only This Menu");
+
     }
 }

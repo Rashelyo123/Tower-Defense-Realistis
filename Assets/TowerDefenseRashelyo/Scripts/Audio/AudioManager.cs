@@ -8,9 +8,9 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
 
     [Header("Audio Sources")]
-    [SerializeField] private AudioSource buttonOpen_audioSource;
+    [SerializeField] private AudioSource button_audioSource;
     [SerializeField] private AudioSource BGM_audioSource;
-    [SerializeField] private AudioSource buttonClose_audioSource;
+    [SerializeField] private AudioSource SFX_audioSource;
 
 
 
@@ -112,11 +112,11 @@ public class AudioManager : MonoBehaviour
         switch (category)
         {
             case AudioCategory.UI:
-                return buttonOpen_audioSource;
+                return button_audioSource;
             case AudioCategory.BGM:
                 return BGM_audioSource;
             case AudioCategory.SFX:
-                return buttonClose_audioSource;
+                return SFX_audioSource;
             default:
                 return null;
         }

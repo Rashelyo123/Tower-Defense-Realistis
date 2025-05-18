@@ -212,6 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTag: Enemy
   damageValue: 10
+  MaximumAngularCameraShake: {x: 0.6, y: 0.6, z: 0.6}
   hitSound: {fileID: 8300000, guid: 8e11478d4a2e1c2439479df215b7bc47, type: 3}
 --- !u!4 &27501438 stripped
 Transform:
@@ -11180,6 +11181,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 432244, guid: 201c750a85d617249b8405c7d042da15, type: 3}
   m_PrefabInstance: {fileID: 367821197}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1570465741 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7870193871868548754, guid: b8a07d5af8414324a900b53d5e645c79, type: 3}
+  m_PrefabInstance: {fileID: 3411645342225201694}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1570465742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1570465741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ee1c62c905bb24ea7c9cf3d9d40b56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TraumaExponent: 1
+  MaximumAngularShake: {x: 3, y: 3, z: 3}
+  MaximumTranslationShake: {x: 0.75, y: 0.75, z: 0.75}
 --- !u!4 &1570855093 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2179048402603654051, guid: 7f97fadf94c549647b9f484654ef0165, type: 3}
@@ -13693,7 +13714,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7870193871868548754, guid: b8a07d5af8414324a900b53d5e645c79, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1570465742}
   m_SourcePrefab: {fileID: 100100000, guid: b8a07d5af8414324a900b53d5e645c79, type: 3}
 --- !u!1001 &4878368671246929982
 PrefabInstance:
@@ -14201,6 +14225,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 23333611}
     m_Modifications:
+    - target: {fileID: 2623939706100596889, guid: 52185769450465649a5608f67864a45b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3166181040106721679, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: coinsText
       value: 
@@ -14291,7 +14319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: totalWaves
-      value: 100
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: nextWaveText
@@ -14367,7 +14395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.size
-      value: 16
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[0]
@@ -14435,63 +14463,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[16]
-      value: 9
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[17]
-      value: 9
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[18]
-      value: 9
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[19]
-      value: 9
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[20]
-      value: 9
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[21]
-      value: 9
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[22]
-      value: 9
+      value: 23
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[23]
-      value: 9
+      value: 34
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[24]
-      value: 9
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[25]
-      value: 9
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[26]
-      value: 9
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[27]
-      value: 9
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[28]
-      value: 9
+      value: 26
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[29]
-      value: 9
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[30]
-      value: 9
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6677880216084651045, guid: 52185769450465649a5608f67864a45b, type: 3}
       propertyPath: wavesSpawnLimits.Array.data[31]
