@@ -20,6 +20,7 @@ public class PPFXPhysicForce : MonoBehaviour
 	public string targetTag = "Enemy";
 	[SerializeField] private AudioClip explosionSound;
 	[SerializeField] private AudioSource explosionAudioSource;
+	[SerializeField] private Vector3 CameraShake;
 
 
 
@@ -47,7 +48,7 @@ public class PPFXPhysicForce : MonoBehaviour
 		{
 			var _rb = colliders[i].GetComponent<Rigidbody>();
 			Camera.main.GetComponent<StressReceiver>().InduceStress(1.0f);
-			Camera.main.GetComponent<StressReceiver>().MaximumAngularShake = new Vector3(1, 1, 1);
+			Camera.main.GetComponent<StressReceiver>().MaximumAngularShake = CameraShake;
 
 
 

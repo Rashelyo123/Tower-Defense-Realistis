@@ -148,9 +148,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTag: Enemy
-  damageValue: 19
-  damageParticle: {fileID: 4186470608034871016, guid: 419d6ca370932a142a195479044cb169, type: 3}
-  lifeTime: 5
+  damageValue: 0
+  damageParticle: {fileID: 8417746049682774537, guid: 38de1af56c58e564c84c067f2016aa9c, type: 3}
+  lifeTime: 3
   damageParticleLifetime: 2
 --- !u!1001 &1557026888611112519
 PrefabInstance:
@@ -204,9 +204,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: dd24ecb011a2dc74d8ecdb7d79a828ee, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: dd24ecb011a2dc74d8ecdb7d79a828ee, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: dd24ecb011a2dc74d8ecdb7d79a828ee, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: dd24ecb011a2dc74d8ecdb7d79a828ee, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: dd24ecb011a2dc74d8ecdb7d79a828ee, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800000, guid: dd24ecb011a2dc74d8ecdb7d79a828ee, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: dd24ecb011a2dc74d8ecdb7d79a828ee, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: dd24ecb011a2dc74d8ecdb7d79a828ee, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: dd24ecb011a2dc74d8ecdb7d79a828ee, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19800002, guid: dd24ecb011a2dc74d8ecdb7d79a828ee, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

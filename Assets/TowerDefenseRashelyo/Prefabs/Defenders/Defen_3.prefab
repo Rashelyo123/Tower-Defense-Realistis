@@ -42,7 +42,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -1118658539993916506, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
       propertyPath: defenderId
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 845092682427692234, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
       propertyPath: fireClip

@@ -124,7 +124,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -1118658539993916506, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
       propertyPath: defenderId
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 845092682427692234, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
       propertyPath: projectile
@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 3839479243085914767}
     - target: {fileID: 845092682427692234, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
       propertyPath: shootingDelay
-      value: 1.5
+      value: 2.69
       objectReference: {fileID: 0}
     - target: {fileID: 936782595083587104, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
@@ -200,7 +200,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1815094766584017321, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
       propertyPath: m_Name
-      value: Defender_4
+      value: Defen_2
       objectReference: {fileID: 0}
     - target: {fileID: 4486131571003064741, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
       propertyPath: gunHead

@@ -166,7 +166,7 @@ public class EnemySpawner : MonoBehaviour
 
             if (currentWave == totalWaves)
             {
-                nextWaveText.text = "Finnal Wave : " + counts.ToString();
+                nextWaveText.text = "Disaster Is Coming : " + counts.ToString();
 
             }
 

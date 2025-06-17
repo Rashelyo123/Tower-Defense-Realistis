@@ -50,6 +50,7 @@ public class Health : MonoBehaviour
         // Get access to the game manager to update the coins display
         gManager = GameObject.FindObjectOfType<GameManager>();
 
+
         // Initialize the health slider with max health
         if (healthColor)
             healthColor.maxValue = maxHealthValue;
@@ -80,6 +81,8 @@ public class Health : MonoBehaviour
         {
             if (healthValue <= 0)
             {
+
+
                 if (GetComponent<CapsuleCollider>())
                     GetComponent<CapsuleCollider>().enabled = false;
 
@@ -91,6 +94,7 @@ public class Health : MonoBehaviour
                 // Instantiate the destroys particle
                 if (damageParticle)
                     Instantiate(damageParticle, transform.position, transform.rotation);
+
 
                 // Destroy the health bar game object
                 Destroy(healthColor.transform.parent.gameObject);
@@ -110,6 +114,7 @@ public class Health : MonoBehaviour
                     }
 
                     isDead = true;
+
 
                 }
                 else
@@ -159,6 +164,8 @@ public class Health : MonoBehaviour
                 }
                 else
                 {
+
+
                     // Destroy by delay (let the animation to be ended)
                     StartCoroutine(Destroy_Delay());
                 }
