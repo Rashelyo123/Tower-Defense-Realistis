@@ -236,8 +236,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721b7e8c81734f443a4f947a44035bd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypointName: Waypoint_1
+  path: {fileID: 0}
   remainingDistance: 0.3
+  moveSpeed: 5
+  pauseDurationAtWaypoint: 0
+  towerDamage: 10
+  endOfPathBehavior: 2
+  onReachWaypoint:
+    m_PersistentCalls:
+      m_Calls: []
+  onReachEndOfPath:
+    m_PersistentCalls:
+      m_Calls: []
+  spawner: {fileID: 0}
   reachedToEnd: 0
 --- !u!114 &4162634734741822390
 MonoBehaviour:
@@ -258,7 +269,6 @@ MonoBehaviour:
   healthValue: 100
   maxHealthValue: 100
   healthColor: {fileID: 2987944499476323413}
-  DeadAudioSource: {fileID: 5033700439152740269}
 --- !u!114 &4162634734741822377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -919,6 +929,10 @@ PrefabInstance:
     - target: {fileID: 3431126905049895018, guid: 0adc03c6958a1b64f92f4187ccabf901, type: 3}
       propertyPath: m_Name
       value: MuzzelFlash_ParticleSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 3431126905049895018, guid: 0adc03c6958a1b64f92f4187ccabf901, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

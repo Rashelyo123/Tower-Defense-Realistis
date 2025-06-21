@@ -61,6 +61,10 @@ PrefabInstance:
       value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4162634734741822390, guid: 306c93279a1b33b418aa33ac5ab08fae, type: 3}
+      propertyPath: damageParticle
+      value: 
+      objectReference: {fileID: 4550076289710732121, guid: a73108d561dbdf34ba462e73e97ed541, type: 3}
+    - target: {fileID: 4162634734741822390, guid: 306c93279a1b33b418aa33ac5ab08fae, type: 3}
       propertyPath: maxHealthValue
       value: 500
       objectReference: {fileID: 0}

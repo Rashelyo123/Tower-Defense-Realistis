@@ -114,4 +114,9 @@ public class MainMenu : MonoBehaviour
         target.SetActive(false);
 
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

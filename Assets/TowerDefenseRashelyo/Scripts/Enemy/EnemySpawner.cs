@@ -1,9 +1,3 @@
-// AliyerEdon@mail.com Christmas 2022
-// Wave based spawner
-// Use this component to spawn enemies based on the limited count value / option in the random selected points
-
-//*** Use first point of each waypoints group as spawn points
-
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,8 +6,10 @@ using System.Collections.Generic;
 public class EnemySpawner : MonoBehaviour
 {
     [Space(7)]
-    // Spawn point to instantiate the enemies at here
+    [Header("Spawn Points")]
+    // Spawn point to instantiate the enemies at here, paired with WaypointSystem
     public Transform[] spawnPoints;
+    public WaypointSystem[] waypointSystems; // Array untuk menyimpan WaypointSystem terkait
 
     // Enemies prefabs
     public GameObject[] enemies;
@@ -22,7 +18,7 @@ public class EnemySpawner : MonoBehaviour
     // Start delay for each wave spawns
     public int startDelay = 3;
 
-    // Spwan the next enemy delay
+    // Spawn the next enemy delay
     public float spawnDelay = 1f;
 
     [Header("Waves System")]
@@ -47,13 +43,21 @@ public class EnemySpawner : MonoBehaviour
     GameManager gameManager;
     // Waves system
     [HideInInspector] public GameObject[] allObjects;
-    [HideInInspector] public List<GameObject> spawnedEnemies;
+    [HideInInspector] public List<GameObject> spawnedEnemies = new List<GameObject>();
     int currentWave = 0;
     int spawnedCounts = 0;
 
+    void Start()
+    {
+        // Validasi bahwa jumlah spawnPoints dan waypointSystems sama
+        if (spawnPoints.Length != waypointSystems.Length)
+        {
+            Debug.LogError($"Jumlah spawnPoints ({spawnPoints.Length}) tidak sama dengan jumlah waypointSystems ({waypointSystems.Length}) pada {gameObject.name}!");
+        }
+        StartCoroutine(StartCoroutine());
+    }
 
-
-    IEnumerator Start()
+    IEnumerator StartCoroutine()
     {
         // get GameManager component to display the you win window
         gameManager = GameObject.FindObjectOfType<GameManager>();
@@ -75,7 +79,7 @@ public class EnemySpawner : MonoBehaviour
         // Spawn start delay for each wave
         yield return new WaitForSeconds(startDelay);
 
-        // The game / wave is now started, you can start spawing
+        // The game / wave is now started, you can start spawning
         gameStarted = true;
         canSpawn = true;
 
@@ -97,8 +101,18 @@ public class EnemySpawner : MonoBehaviour
                 // Random spawns points selection
                 index = Random.Range(0, spawnPoints.Length);
                 currentPoint = spawnPoints[index];
-                GameObject enemySpawned = Instantiate(enemies[index], currentPoint.position, Quaternion.identity);
+                GameObject enemySpawned = Instantiate(enemies[Random.Range(0, enemies.Length)], currentPoint.position, Quaternion.identity);
                 enemySpawned.name = "Enemy_Wave_" + currentWave.ToString();
+                spawnedEnemies.Add(enemySpawned);
+
+                // Atur WaypointSystem secara acak untuk musuh
+                NavMover navMover = enemySpawned.GetComponent<NavMover>();
+                if (navMover != null && index < waypointSystems.Length)
+                {
+                    navMover.SetPath(waypointSystems[index]);
+                    navMover.spawner = this; // Atur referensi spawner
+                }
+
                 spawnedCounts++;
             }
             else
@@ -141,16 +155,18 @@ public class EnemySpawner : MonoBehaviour
             {
                 spawnedEnemies.Add(allObjects[a]);
             }
+
+
         }
         // Go to the next wave
         if (spawnedEnemies.Count == 0)
         {
             gameStarted = false;
-            StartCoroutine(Start());
+            StartCoroutine(StartCoroutine());
         }
     }
 
-    // All waves has been passed... the palyer is now a wiinner
+    // All waves has been passed... the player is now a winner
     IEnumerator Next_Wave_Counter()
     {
         // Show the next wave counter
@@ -167,17 +183,20 @@ public class EnemySpawner : MonoBehaviour
             if (currentWave == totalWaves)
             {
                 nextWaveText.text = "Disaster Is Coming : " + counts.ToString();
-
             }
 
             if (currentWave > totalWaves)
                 nextWaveText.text = "Waves Completed...";
 
             yield return new WaitForSeconds(1f);
-
         }
         // The next wave is now started
         nextWaveText.gameObject.SetActive(false);
+    }
 
+    // Dipanggil saat musuh mencapai akhir jalur
+    public void OnEnemyReachedEnd(GameObject enemy)
+    {
+        spawnedEnemies.Remove(enemy);
     }
 }

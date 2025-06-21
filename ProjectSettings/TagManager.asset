@@ -9,6 +9,7 @@ TagManager:
   - Ground
   - Center Point
   - Tanah
+  - Defender
   layers:
   - Default
   - TransparentFX

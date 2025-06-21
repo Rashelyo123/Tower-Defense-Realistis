@@ -1,84 +1,162 @@
-﻿// AliyerEdon@mail.com Christmas 2022
-// Attach this component to your enemy actor to make it mover along waypoints 
-// Used unity's navigation system to follow the targets (waypoints)
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(UnityEngine.AI.NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class NavMover : MonoBehaviour
 {
+	public enum EndOfPathBehavior { Stop, Loop, Destroy, Custom }
 
-
-	List<Transform> points = new List<Transform>();
-
-	private int destPoint = 0;
-	private UnityEngine.AI.NavMeshAgent agent;
-
-	[Space(5)]
 	[Header("Waypoint System")]
-	public string waypointName;
-	WaypointSystem path;
+	[Tooltip("Biarkan kosong untuk memilih path secara acak dari EnemySpawner")]
+	public WaypointSystem path; // Opsional: untuk konfigurasi manual
 	public float remainingDistance = 0.3f;
 
+	[Header("Movement Settings")]
+	public float moveSpeed = 5f;
+	public float pauseDurationAtWaypoint = 0f;
+
+	[Header("End of Path Settings")]
+	public int towerDamage = 10; // Jumlah damage ke tower saat mencapai akhir
+	public EndOfPathBehavior endOfPathBehavior = EndOfPathBehavior.Destroy;
+
+	[Header("Events")]
+	public UnityEvent onReachWaypoint;
+	public UnityEvent onReachEndOfPath;
+
+	[Header("Spawner Integration")]
+	public EnemySpawner spawner; // Opsional: referensi ke EnemySpawner
+
+	private List<Transform> points = new List<Transform>();
+	private int destPoint = 0;
+	private NavMeshAgent agent;
+	private bool isPaused;
 	[HideInInspector] public bool reachedToEnd;
+
+	// Dipanggil oleh EnemySpawner untuk mengatur path secara dinamis
+	public void SetPath(WaypointSystem newPath)
+	{
+		path = newPath;
+	}
 
 	void Start()
 	{
+		agent = GetComponent<NavMeshAgent>();
+		if (agent == null)
+		{
+			Debug.LogError($"NavMeshAgent tidak ditemukan pada {gameObject.name}!");
+			return;
+		}
 
-		path = GameObject.Find(waypointName).GetComponent<WaypointSystem>();
+		if (path == null)
+		{
+			Debug.LogWarning($"WaypointSystem tidak diatur pada {gameObject.name}. Menunggu assignment dari EnemySpawner.");
+			return;
+		}
 
 		points = path.waypoints;
+		if (points == null || points.Count == 0)
+		{
+			Debug.LogError($"Tidak ada waypoint yang diatur pada WaypointSystem untuk {gameObject.name}!");
+			return;
+		}
 
-		agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-
-		// Disabling auto-braking allows for continuous movement
-		// between points (ie, the agent doesn't slow down as it
-		// approaches a destination point).
+		agent.speed = moveSpeed;
 		agent.autoBraking = false;
-
 		GotoNextPoint();
+	}
+
+	void Update()
+	{
+		if (isPaused || !agent.enabled) return;
+
+		if (agent.remainingDistance < remainingDistance)
+		{
+			if (pauseDurationAtWaypoint > 0)
+			{
+				StartCoroutine(PauseAtWaypoint());
+			}
+			else
+			{
+				GotoNextPoint();
+			}
+		}
 	}
 
 	void GotoNextPoint()
 	{
+		if (points.Count == 0) return;
 
-		// Returns if no points have been set up
-		if (points.Count == 0)
-			return;
-
-		// Reached to the end of the waypoints
-		if (destPoint == points.Count)
+		if (destPoint >= points.Count)
 		{
-			// if (GetComponent<AnimationList>().actor)
-			// {
-			// 	GetComponent<AnimationList>().actor.CrossFade(GetComponent<AnimationList>().fireClip);
-			// }
-			reachedToEnd = true;
-			agent.enabled = false;
+			HandleEndOfPath();
 			return;
 		}
 
-		// Set the agent to go to the currently selected destination.
 		agent.destination = points[destPoint].position;
-
-		// Choose the next point in the array as the destination,
-		// cycling to the start if necessary.
-		if (destPoint < points.Count)
-			destPoint = destPoint + 1;
-
-
+		onReachWaypoint.Invoke();
+		destPoint++;
 	}
 
-
-	void Update()
+	void HandleEndOfPath()
 	{
-		// Choose the next destination point when the agent gets
-		// close to the current one.
-		if (agent.enabled)
+		reachedToEnd = true;
+		onReachEndOfPath.Invoke();
+
+		// Kurangi kesehatan tower
+		GameManager gameManager = GameObject.FindObjectOfType<GameManager>();
+		if (gameManager != null)
 		{
-			if (agent.remainingDistance < remainingDistance)
-				GotoNextPoint();
+			gameManager.Reduce_Tower_Health(towerDamage);
 		}
+		else
+		{
+			Debug.LogWarning($"GameManager tidak ditemukan untuk mengurangi kesehatan tower pada {gameObject.name}!");
+		}
+
+		// Beri tahu spawner bahwa musuh telah mencapai akhir
+		if (spawner != null)
+		{
+			spawner.OnEnemyReachedEnd(gameObject);
+		}
+
+		// Hancurkan musuh menggunakan komponen Health
+		Health health = GetComponent<Health>();
+		if (health != null && health.targetType == TargetType.Enemy)
+		{
+			health.ApplyDamage(health.maxHealthValue); // Berikan damage cukup untuk menghancurkan
+		}
+		else if (endOfPathBehavior == EndOfPathBehavior.Destroy)
+		{
+			Destroy(gameObject); // Hancurkan langsung jika tidak ada komponen Health
+		}
+
+		switch (endOfPathBehavior)
+		{
+			case EndOfPathBehavior.Stop:
+				agent.enabled = false;
+				break;
+			case EndOfPathBehavior.Loop:
+				destPoint = 0;
+				GotoNextPoint();
+				break;
+			case EndOfPathBehavior.Destroy:
+				// Sudah ditangani di atas oleh Health atau Destroy
+				break;
+			case EndOfPathBehavior.Custom:
+				break;
+		}
+	}
+
+	IEnumerator PauseAtWaypoint()
+	{
+		isPaused = true;
+		agent.isStopped = true;
+		yield return new WaitForSeconds(pauseDurationAtWaypoint);
+		agent.isStopped = false;
+		isPaused = false;
+		GotoNextPoint();
 	}
 }

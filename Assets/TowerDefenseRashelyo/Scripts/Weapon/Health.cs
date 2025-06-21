@@ -1,6 +1,3 @@
-// AliyerEdon@mail.com Christmas 2022
-// Add this component to your every actor that did you like to have health and dead features
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,8 +18,8 @@ public class Health : MonoBehaviour
     // Type of the target actor
     public TargetType targetType;
 
-
     // How much award coins give to the player after destroying this actor
+
     public int destroyAwardedCoins = 100;
 
     // Instantiate this game object after destroying the actor
@@ -31,8 +28,6 @@ public class Health : MonoBehaviour
     // Wait before destroying the actor's game object
     public float destroyDelay = 0;
     GameManager gManager;
-
-
 
     // Internal variables
     bool isDead;
@@ -50,7 +45,6 @@ public class Health : MonoBehaviour
         // Get access to the game manager to update the coins display
         gManager = GameObject.FindObjectOfType<GameManager>();
 
-
         // Initialize the health slider with max health
         if (healthColor)
             healthColor.maxValue = maxHealthValue;
@@ -63,12 +57,14 @@ public class Health : MonoBehaviour
     // Apply damage to the actor
     public void ApplyDamage(int damage)
     {
+        if (isDead) return; // Cegah pemrosesan jika sudah mati
+
         // Reduce the health value
         healthValue = Mathf.Clamp(healthValue - damage, 0, maxHealthValue);
 
         // Update the health bar game object
         #region Health bar
-        if (healthColor)
+        if (healthColor != null && healthColor.gameObject != null)
         {
             // Update the health slider UI
             healthColor.value = healthValue; // Set the slider value according to the current health
@@ -77,98 +73,81 @@ public class Health : MonoBehaviour
 
         // Dead
         #region Enemy
-        if (targetType == TargetType.Enemy)
+        if (targetType == TargetType.Enemy && healthValue <= 0)
         {
-            if (healthValue <= 0)
-            {
+            if (GetComponent<CapsuleCollider>())
+                GetComponent<CapsuleCollider>().enabled = false;
 
+            GetComponent<Weapon>().canShoot = false;
 
-                if (GetComponent<CapsuleCollider>())
-                    GetComponent<CapsuleCollider>().enabled = false;
-
-                GetComponent<Weapon>().canShoot = false;
-
-                // Add coins when the enemy was destroyed
+            // Add coins when the enemy was destroyed
+            if (gManager)
                 gManager.AddCoins(destroyAwardedCoins);
 
-                // Instantiate the destroys particle
-                if (damageParticle)
-                    Instantiate(damageParticle, transform.position, transform.rotation);
+            // Instantiate the destroys particle
+            if (damageParticle)
+            {
+                GameObject particle = Instantiate(damageParticle, transform.position, transform.rotation);
+                Destroy(particle, 2f); // Hancurkan efek partikel setelah 2 detik
+            }
 
-
-                // Destroy the health bar game object
+            // Destroy the health bar game object
+            if (healthColor != null && healthColor.transform.parent != null)
+            {
                 Destroy(healthColor.transform.parent.gameObject);
+            }
 
-                // Stop shooting the weapon
-                GetComponent<Weapon>().shootingDelay = 1000f;
+            // Stop shooting the weapon
+            GetComponent<Weapon>().shootingDelay = 1000f;
 
-                // Play animations if was available
-                if (GetComponent<AnimationList>().actor)
+            // Play animations if was available
+            if (GetComponent<AnimationList>().actor)
+            {
+                GetComponent<Weapon>().canShoot = false;
+
+                if (!isDead)
                 {
-                    GetComponent<Weapon>().canShoot = false;
-
-                    if (!isDead)
-                    {
-                        if (GetComponent<AnimationList>().actor)
-                            StartCoroutine(PlayDeadAnimation());
-                    }
-
-                    isDead = true;
-
-
+                    StartCoroutine(PlayDeadAnimation());
                 }
-                else
-                {
-                    // Destroy by delay (let the animation to be ended)
-                    StartCoroutine(Destroy_Delay());
-                }
+
+                isDead = true;
+            }
+            else
+            {
+                // Destroy by delay (let the animation to be ended)
+                StartCoroutine(Destroy_Delay());
             }
         }
         #endregion
 
         #region Tower
-        if (targetType == TargetType.Tower)
+        if (targetType == TargetType.Tower && healthValue <= 0)
         {
-            // Reduce tower's health after hitting by enemy's weapon
-            gManager.Reduce_Tower_Health(gManager.towerDamage);
-
-            // Tower is destroyed
-            if (healthValue <= 0)
-            {
-                // Instantiate the destroyed particle if it was assigned in the inspector
-                if (damageParticle)
-                    Instantiate(damageParticle, transform.position, transform.rotation);
-
-            }
+            // Instantiate the destroyed particle if it was assigned in the inspector
+            if (damageParticle)
+                Instantiate(damageParticle, transform.position, transform.rotation);
         }
         #endregion
 
         #region Defender
-        if (targetType == TargetType.Defender)
+        if (targetType == TargetType.Defender && healthValue <= 0)
         {
-            // Tower is destroyed
-            if (healthValue <= 0)
+            if (damageParticle)
+                Instantiate(damageParticle, transform.position, transform.rotation);
+
+            // Play its animation if it was available
+            if (GetComponent<AnimationList>().actor)
             {
-                if (damageParticle)
-                    Instantiate(damageParticle, transform.position, transform.rotation);
-
-                // Play its animation if it was available
-                if (GetComponent<AnimationList>().actor)
+                if (!isDead)
                 {
-                    if (!isDead)
-                    {
-                        if (GetComponent<AnimationList>().actor)
-                            StartCoroutine(PlayDeadAnimation());
-                    }
-                    isDead = true;
+                    StartCoroutine(PlayDeadAnimation());
                 }
-                else
-                {
-
-
-                    // Destroy by delay (let the animation to be ended)
-                    StartCoroutine(Destroy_Delay());
-                }
+                isDead = true;
+            }
+            else
+            {
+                // Destroy by delay (let the animation to be ended)
+                StartCoroutine(Destroy_Delay());
             }
         }
         #endregion
@@ -184,7 +163,8 @@ public class Health : MonoBehaviour
         }
 
         // Stop the nav mesh agent movement
-        GetComponent<UnityEngine.AI.NavMeshAgent>().speed = 0;
+        if (GetComponent<UnityEngine.AI.NavMeshAgent>())
+            GetComponent<UnityEngine.AI.NavMeshAgent>().speed = 0;
         transform.tag = "Untagged";
 
         // Wait 5 seconds to dead animation plays

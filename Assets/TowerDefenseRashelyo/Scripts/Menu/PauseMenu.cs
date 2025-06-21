@@ -6,15 +6,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class PauseMenu : MonoBehaviour
 {
     // Load level by pressing the exit or retry button
     public void LoadLevel(string name)
     {
-        SceneManager.LoadScene(name);
+        StartCoroutine(LoadingScene(name));
     }
 
+    private IEnumerator LoadingScene(string name)
+    {
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene(name);
+    }
     public void Retry()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -43,9 +49,9 @@ public class PauseMenu : MonoBehaviour
     {
         target.SetActive(false);
     }
-    
+
     /// // Use this to toggle enable / disable any game object by clicking on a UI button
-    public void Toggle_Object(GameObject target)   
+    public void Toggle_Object(GameObject target)
     {
         target.SetActive(!target.activeSelf);
     }

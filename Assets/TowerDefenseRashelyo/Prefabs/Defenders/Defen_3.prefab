@@ -126,7 +126,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1815094766584017321, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
       propertyPath: m_Name
-      value: Defender_5
+      value: Defen_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1815094766584017321, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
+      propertyPath: m_TagString
+      value: Defender
       objectReference: {fileID: 0}
     - target: {fileID: 4486131571003064741, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
       propertyPath: gunHead
@@ -142,13 +146,42 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1815094766584017317, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5949208736690902479}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1815094766584017321, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6690088583024039841}
   m_SourcePrefab: {fileID: 100100000, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
 --- !u!4 &809604139443596980 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1815094766584017317, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
   m_PrefabInstance: {fileID: 1300636211086466833}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &809604139443596984 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1815094766584017321, guid: 220721bec0d8a3c4fbe9b89d82bf0498, type: 3}
+  m_PrefabInstance: {fileID: 1300636211086466833}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &6690088583024039841
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809604139443596984}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.43, y: 1.16, z: 5.41}
+  m_Center: {x: 0, y: 6.66, z: 0}
 --- !u!1001 &5948945367138180413
 PrefabInstance:
   m_ObjectHideFlags: 0
