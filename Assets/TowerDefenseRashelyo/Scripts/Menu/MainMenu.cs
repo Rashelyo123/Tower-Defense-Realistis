@@ -33,15 +33,18 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.SetInt("Level Unlocked0", 1);
             PlayerPrefs.SetInt("FirstRun", 1);
             PlayerPrefs.SetInt("Music", 1);
+            PlayerPrefs.SetInt("Total Scores", 0); // Inisialisasi skor awal
         }
 
         if (PlayerPrefs.GetInt("Total Coins") < PlayerPrefs.GetInt("Minimum Coins"))
             PlayerPrefs.SetInt("Total Coins", PlayerPrefs.GetInt("Minimum Coins"));
 
-        totalCoinsText.text = PlayerPrefs.GetInt("Total Coins").ToString();
-        totalScoresText.text = PlayerPrefs.GetInt("Total Scores").ToString();
+        // Perbarui UI dengan pemeriksaan null
+        if (totalCoinsText != null)
+            totalCoinsText.text = PlayerPrefs.GetInt("Total Coins").ToString();
+        if (totalScoresText != null)
+            totalScoresText.text = PlayerPrefs.GetInt("Total Scores").ToString();
     }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.H))

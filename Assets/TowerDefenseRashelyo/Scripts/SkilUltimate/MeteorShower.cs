@@ -45,7 +45,6 @@ public class MeteorShower : MonoBehaviour
         if (!isCooldown)
         {
             ActiveUltimateSkill();
-            AudioEventSystem.PlayAudio("MeteorShower");
 
             StartCooldown();
         }
@@ -63,6 +62,7 @@ public class MeteorShower : MonoBehaviour
         {
             meteorShowerParticle.Play();
             StartCoroutine(UltimateDuration());
+            AudioEventSystem.PlayAudio("MeteorShower");
         }
 
     }

@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/TowerDefenseRashelyo/Scene/intro.unity
+    guid: d0a127cd7efd90543901ace5a26b2305
+  - enabled: 1
     path: Assets/TowerDefenseRashelyo/Scene/Main_Menu.unity
     guid: 6d0a8cf392af4324fb3d75c582e78e22
   - enabled: 1

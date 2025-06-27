@@ -16,7 +16,11 @@ public class GameManager : MonoBehaviour
     int createdDefCounts = 0;
 
     // Coins management
+    // Coins management
+    [Header("Coins Management")]
+    public int startingGameplayCoins = 5000; // Jumlah koin awal untuk gameplay, diatur di Inspector
     [HideInInspector] public int totalCoins;
+    private int initialCoins; // Melacak koin awal untuk menghitung koin yang dihasilkan
     public int[] defendersPrice;
 
     [Space(7)]
@@ -87,16 +91,17 @@ public class GameManager : MonoBehaviour
         audioSource.playOnAwake = false;
         audioSource.loop = false;
 
-        // Existing Start code...
-        if (PlayerPrefs.GetInt("Total Coins") < PlayerPrefs.GetInt("Minimum Coins"))
-            PlayerPrefs.SetInt("Total Coins", PlayerPrefs.GetInt("Minimum Coins"));
+        // Inisialisasi koin untuk gameplay
+        totalCoins = startingGameplayCoins;
+        initialCoins = startingGameplayCoins; // Simpan koin awal untuk perhitungan
+        if (totalCoins < PlayerPrefs.GetInt("Minimum Coins"))
+            totalCoins = PlayerPrefs.GetInt("Minimum Coins");
 
-        currentDefender = 1;
-        totalCoins = PlayerPrefs.GetInt("Total Coins");
         coinsText.text = totalCoins.ToString();
 
         createdDefenders = new List<GameObject>();
         canInstantiate = true;
+        currentDefender = 1;
     }
 
     void Update()
@@ -555,7 +560,7 @@ public class GameManager : MonoBehaviour
 
     private void HandleCancelSelection()
     {
-        if (isSelectingDefender && (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)))
+        if (isSelectingDefender && (Input.GetKeyDown(KeyCode.Q) || Input.GetMouseButtonDown(1)))
         {
             isSelectingDefender = false;
             DestroyPreviewDefender();
@@ -575,40 +580,15 @@ public class GameManager : MonoBehaviour
     public void ReduceCoins(int value)
     {
         totalCoins -= value;
-        PlayerPrefs.SetInt("Total Coins", totalCoins);
         coinsText.text = totalCoins.ToString();
     }
 
     public void AddCoins(int value)
     {
         totalCoins += value;
-        PlayerPrefs.SetInt("Total Coins", totalCoins);
-        PlayerPrefs.SetInt("Total Scores", PlayerPrefs.GetInt("Total Scores") + value);
         coinsText.text = totalCoins.ToString();
     }
 
-    public void Game_Lost()
-    {
-        ResetPreviousHoveredDefender();
-        // Hapus preview saat game over
-        if (previewDefender != null)
-            DestroyPreviewDefender();
-
-        Time.timeScale = 0;
-        gameLostWindow.SetActive(true);
-    }
-
-    public void You_Win()
-    {
-        ResetPreviousHoveredDefender();
-        // Hapus preview saat menang
-        if (previewDefender != null)
-            DestroyPreviewDefender();
-
-        PlayerPrefs.SetInt("Level Unlocked" + (levelID + 1).ToString(), 1);
-        Time.timeScale = 0;
-        gameWinWindow.SetActive(true);
-    }
 
     public void Reduce_Tower_Health(int value)
     {
@@ -618,6 +598,18 @@ public class GameManager : MonoBehaviour
 
         if (towerHealth <= 0)
             Game_Lost();
+    }
+    private void SaveCoinsAndScore()
+    {
+        // Hitung koin yang dihasilkan selama gameplay
+        int earnedCoins = totalCoins - initialCoins;
+        if (earnedCoins > 0) // Hanya tambahkan jika koin bertambah
+        {
+            int currentTotalCoins = PlayerPrefs.GetInt("Total Coins", 0);
+            PlayerPrefs.SetInt("Total Coins", currentTotalCoins + earnedCoins);
+            PlayerPrefs.SetInt("Total Scores", PlayerPrefs.GetInt("Total Scores") + earnedCoins);
+            Debug.Log($"Added {earnedCoins} coins to Total Coins. New Total Coins: {PlayerPrefs.GetInt("Total Coins")}");
+        }
     }
 
     // Helper function to get defender type
@@ -636,5 +628,29 @@ public class GameManager : MonoBehaviour
         // Cleanup preview saat script dihancurkan
         if (previewDefender != null)
             DestroyPreviewDefender();
+    }
+    public void Game_Lost()
+    {
+        ResetPreviousHoveredDefender();
+        // Hapus preview saat game over
+        if (previewDefender != null)
+            DestroyPreviewDefender();
+
+        SaveCoinsAndScore(); // Simpan koin dan skor sebelum game berakhir
+        Time.timeScale = 0;
+        gameLostWindow.SetActive(true);
+    }
+
+    public void You_Win()
+    {
+        ResetPreviousHoveredDefender();
+        // Hapus preview saat menang
+        if (previewDefender != null)
+            DestroyPreviewDefender();
+
+        PlayerPrefs.SetInt("Level Unlocked" + (levelID + 1).ToString(), 1);
+        SaveCoinsAndScore(); // Simpan koin dan skor sebelum game berakhir
+        Time.timeScale = 0;
+        gameWinWindow.SetActive(true);
     }
 }

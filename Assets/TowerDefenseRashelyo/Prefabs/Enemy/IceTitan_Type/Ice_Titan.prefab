@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4162634734741822390, guid: 306c93279a1b33b418aa33ac5ab08fae, type: 3}
       propertyPath: healthValue
-      value: 1900
+      value: 5000
       objectReference: {fileID: 0}
     - target: {fileID: 4162634734741822390, guid: 306c93279a1b33b418aa33ac5ab08fae, type: 3}
       propertyPath: damageParticle
@@ -66,11 +66,19 @@ PrefabInstance:
       objectReference: {fileID: 4550076289710732121, guid: 6863ce4e345ba8947ad4e877ee1d1fc4, type: 3}
     - target: {fileID: 4162634734741822390, guid: 306c93279a1b33b418aa33ac5ab08fae, type: 3}
       propertyPath: maxHealthValue
-      value: 1900
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162634734741822391, guid: 306c93279a1b33b418aa33ac5ab08fae, type: 3}
+      propertyPath: moveSpeed
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4162634734741822391, guid: 306c93279a1b33b418aa33ac5ab08fae, type: 3}
       propertyPath: waypointName
       value: Waypoint_4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4162634734741822391, guid: 306c93279a1b33b418aa33ac5ab08fae, type: 3}
+      propertyPath: pauseDurationAtWaypoint
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4930352519433772401, guid: 306c93279a1b33b418aa33ac5ab08fae, type: 3}
       propertyPath: m_AnchoredPosition.y
